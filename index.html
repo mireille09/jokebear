@@ -88,6 +88,41 @@
         /* 手機斷行控制 */
         @media (max-width: 600px) { .mobile-br { display: block; width: 100%; height: 0; } }
         @media (min-width: 601px) { .mobile-br { display: none; } }
+        /* --- 專門控制列印的樣式：強制 8 欄 --- */
+@media print {
+    /* 1. 設定紙張邊距，讓空間最大化 */
+    @page {
+        margin: 0.5cm;
+    }
+
+    /* 2. 強制容器在列印時固定為 8 欄，不准跑掉 */
+    .result-container {
+        display: grid !important;
+        grid-template-columns: repeat(8, 1fr) !important; 
+        gap: 5px !important; /* 縮小間距，確保 8 個排得進去 */
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* 3. 調整卡片在紙張上的細節 */
+    .emp-card {
+        width: 100% !important;
+        padding: 2px !important; /* 極小化內距 */
+        border: 1px solid #000 !important;
+        page-break-inside: avoid;
+    }
+
+    /* 4. 縮小字體，防止名字太長撐開格子 */
+    .emp-name-tag {
+        font-size: 10px !important;
+        white-space: nowrap;
+    }
+
+    /* 5. 隱藏列印時不需要的按鈕 */
+    .search-section, .nav-link, .btn-group, button, #off-duty-box {
+        display: none !important;
+    }
+}
     </style>
 </head>
 <body>
